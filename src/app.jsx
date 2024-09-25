@@ -28,6 +28,26 @@ const App = () => {
           </ul>
           <button className="button">Adicionar</button>
         </div>
+        <form className="form-add-friend form-split-bill">
+          <h2>Rache a conta com Ântonio</h2>
+          <label>
+            💰 Valor total
+            <input type="text" />
+          </label>
+          <label>
+            📊 Seus gastos
+            <input type="text" />
+          </label>
+          <label>
+            🤑 Quem vai pagar
+            <select>
+              <option value="">Você</option>
+              <option value="">Ântonio</option>
+            </select>
+          </label>
+
+          <button className="button">Rachar conta</button>
+        </form>
       </div>
     </>
   )
