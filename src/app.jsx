@@ -30,13 +30,10 @@ const friends = [
 ]
 
 const App = () => {
-  const [listFriends, setListFriends] = useState(friends)
-  const [form, setForm] = useState(false)
+  const [selectedFriend, setSelectedFriend] = useState(null)
 
-  const handleClick = (index) => {
-    setForm(!form)
-    return index
-  }
+  const handleClickFriend = (friend) =>
+    setSelectedFriend((preview) => (preview?.id === friend.id ? null : friend))
 
   return (
     <main>
@@ -44,16 +41,22 @@ const App = () => {
       <div className="app">
         <aside className="sidebar">
           <ul>
-            {listFriends.map(({ id, img, name, balance }) => {
-              const { message, color } = getMsgInfo(balance)
+            {friends.map((friend) => {
+              const { message, color } = getMsgInfo(friend.balance)
+              const isSelectedFriend = friend.id === selectedFriend?.id
 
               return (
-                <li key={id}>
-                  <img src={img} alt={`Foto do ${name}`} />
-                  <h3>{name}</h3>
+                <li key={friend.id}>
+                  <img src={friend.img} alt={`Foto do ${friend.name}`} />
+                  <h3>{friend.name}</h3>
                   <p className={color}>{message}</p>
-                  <button className="button" onClick={() => handleClick("")}>
-                    Selecionar
+                  <button
+                    className={`button ${
+                      isSelectedFriend ? "button-close" : ""
+                    }`}
+                    onClick={() => handleClickFriend(friend)}
+                  >
+                    {isSelectedFriend ? "Fechar" : "Selecionar"}
                   </button>
                 </li>
               )
@@ -62,9 +65,9 @@ const App = () => {
           <button className="button">Adicionar</button>
         </aside>
 
-        {form && (
+        {selectedFriend && (
           <form className="form-add-friend form-split-bill">
-            <h2>Rache a conta com Ântonio</h2>
+            <h2>Rache a conta com {selectedFriend.name}</h2>
             <label>
               💰 Valor total
               <input type="text" />
@@ -77,7 +80,9 @@ const App = () => {
               🤑 Quem vai pagar
               <select>
                 <option value="">Você</option>
-                <option value="">Ântonio</option>
+                <option value={selectedFriend.name}>
+                  {selectedFriend.name}
+                </option>
               </select>
             </label>
 
