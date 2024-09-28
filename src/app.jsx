@@ -8,7 +8,7 @@ const getMsgInfo = (balance) =>
     ? { message: `Te deve ${balance} reais`, color: "green-credit" }
     : { message: "Estão quites", color: "white-neutral" }
 
-const friends = [
+const initialFriends = [
   {
     id: crypto.randomUUID(),
     img: "henrique-48.jpg",
@@ -30,10 +30,36 @@ const friends = [
 ]
 
 const App = () => {
+  const [friends, setFriends] = useState(initialFriends)
   const [selectedFriend, setSelectedFriend] = useState(null)
+  const [totalBill, setTotalBill] = useState("")
+  const [mySpend, setMySpend] = useState("")
+  const [whoWillPay, setWhoWillPay] = useState("you")
 
   const handleClickFriend = (friend) =>
     setSelectedFriend((preview) => (preview?.id === friend.id ? null : friend))
+
+  const handleChangeBill = (e) => setTotalBill(e.target.value)
+  const handleChangeMySpend = (e) => setMySpend(e.target.value)
+  const handleChangeWhoWillPay = (e) => setWhoWillPay(e.target.value)
+
+  const handleSubmitShareBill = (e) => {
+    e.preventDefault()
+
+    setFriends((prev) =>
+      prev.map((friend) =>
+        selectedFriend.id === friend.id
+          ? {
+              ...friend,
+              balance:
+                whoWillPay === "you"
+                  ? friend.balance + (+totalBill - +mySpend)
+                  : friend.balance - mySpend,
+            }
+          : friend,
+      ),
+    )
+  }
 
   return (
     <main>
@@ -66,20 +92,28 @@ const App = () => {
         </aside>
 
         {selectedFriend && (
-          <form className="form-add-friend form-split-bill">
+          <form className="form-split-bill" onSubmit={handleSubmitShareBill}>
             <h2>Rache a conta com {selectedFriend.name}</h2>
             <label>
               💰 Valor total
-              <input type="text" />
+              <input
+                value={totalBill}
+                onChange={handleChangeBill}
+                type="number"
+              />
             </label>
             <label>
               📊 Seus gastos
-              <input type="text" />
+              <input
+                value={mySpend}
+                onChange={handleChangeMySpend}
+                type="number"
+              />
             </label>
             <label>
               🤑 Quem vai pagar
-              <select>
-                <option value="">Você</option>
+              <select value={whoWillPay} onChange={handleChangeWhoWillPay}>
+                <option value="you">Você</option>
                 <option value={selectedFriend.name}>
                   {selectedFriend.name}
                 </option>
