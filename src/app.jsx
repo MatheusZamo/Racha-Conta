@@ -59,6 +59,11 @@ const App = () => {
           : friend,
       ),
     )
+
+    setSelectedFriend(null)
+    setTotalBill("")
+    setMySpend("")
+    setWhoWillPay("you")
   }
 
   return (
