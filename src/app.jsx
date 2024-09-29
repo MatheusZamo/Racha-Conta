@@ -35,6 +35,9 @@ const App = () => {
   const [totalBill, setTotalBill] = useState("")
   const [mySpend, setMySpend] = useState("")
   const [whoWillPay, setWhoWillPay] = useState("you")
+  const [addFriend, setAddFriend] = useState(false)
+  const [nameFriend, setNameFriend] = useState("")
+  const [imgFriend, setImgFriend] = useState("")
 
   const handleClickFriend = (friend) =>
     setSelectedFriend((preview) => (preview?.id === friend.id ? null : friend))
@@ -66,6 +69,34 @@ const App = () => {
     setWhoWillPay("you")
   }
 
+  const handleClickAddFriend = () => {
+    setAddFriend(!addFriend)
+  }
+  const handleChangeName = (e) => setNameFriend(e.target.value)
+  const handleChangeImg = (e) => setImgFriend(e.target.value)
+
+  const handleSubmitNewFriend = (e) => {
+    e.preventDefault()
+
+    nameFriend.length && imgFriend.length
+      ? setFriends((preview) => [
+          ...preview,
+          {
+            id: crypto.randomUUID(),
+            img: imgFriend,
+            name: nameFriend,
+            balance: 0,
+          },
+        ])
+      : friends
+
+    setNameFriend("")
+    setImgFriend("")
+    nameFriend.length && imgFriend.length
+      ? setAddFriend(false)
+      : setAddFriend(true)
+  }
+
   return (
     <main>
       <Logo />
@@ -93,7 +124,35 @@ const App = () => {
               )
             })}
           </ul>
-          <button className="button">Adicionar</button>
+
+          {addFriend && (
+            <form className="form-add-friend" onSubmit={handleSubmitNewFriend}>
+              <label>
+                🧍‍♂️ Nome
+                <input
+                  type="text"
+                  value={nameFriend}
+                  onChange={handleChangeName}
+                />
+              </label>
+              <label>
+                📸 Foto
+                <input
+                  type="text"
+                  value={imgFriend}
+                  onChange={handleChangeImg}
+                />
+              </label>
+              <button className="button">Adicionar</button>
+            </form>
+          )}
+
+          <button
+            className={`button ${addFriend ? "button-close" : ""}`}
+            onClick={handleClickAddFriend}
+          >
+            {addFriend ? "Fechar" : "Adicionar amigo(a)"}
+          </button>
         </aside>
 
         {selectedFriend && (
