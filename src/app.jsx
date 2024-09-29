@@ -1,12 +1,6 @@
 import { useState } from "react"
 import { Logo } from "./components/logo"
-
-const getMsgInfo = (balance) =>
-  balance < 0
-    ? { message: `Você deve ${Math.abs(balance)} reais`, color: "red-debit" }
-    : balance > 0
-    ? { message: `Te deve ${balance} reais`, color: "green-credit" }
-    : { message: "Estão quites", color: "white-neutral" }
+import { FriendsList } from "./components/friends-list"
 
 const initialFriends = [
   {
@@ -101,59 +95,18 @@ const App = () => {
     <main>
       <Logo />
       <div className="app">
-        <aside className="sidebar">
-          <ul>
-            {friends.map((friend) => {
-              const { message, color } = getMsgInfo(friend.balance)
-              const isSelectedFriend = friend.id === selectedFriend?.id
-
-              return (
-                <li key={friend.id}>
-                  <img src={friend.img} alt={`Foto do ${friend.name}`} />
-                  <h3>{friend.name}</h3>
-                  <p className={color}>{message}</p>
-                  <button
-                    className={`button ${
-                      isSelectedFriend ? "button-close" : ""
-                    }`}
-                    onClick={() => handleClickFriend(friend)}
-                  >
-                    {isSelectedFriend ? "Fechar" : "Selecionar"}
-                  </button>
-                </li>
-              )
-            })}
-          </ul>
-
-          {addFriend && (
-            <form className="form-add-friend" onSubmit={handleSubmitNewFriend}>
-              <label>
-                🧍‍♂️ Nome
-                <input
-                  type="text"
-                  value={nameFriend}
-                  onChange={handleChangeName}
-                />
-              </label>
-              <label>
-                📸 Foto
-                <input
-                  type="text"
-                  value={imgFriend}
-                  onChange={handleChangeImg}
-                />
-              </label>
-              <button className="button">Adicionar</button>
-            </form>
-          )}
-
-          <button
-            className={`button ${addFriend ? "button-close" : ""}`}
-            onClick={handleClickAddFriend}
-          >
-            {addFriend ? "Fechar" : "Adicionar amigo(a)"}
-          </button>
-        </aside>
+        <FriendsList
+          friends={friends}
+          selectedFriend={selectedFriend}
+          onClickFriend={handleClickFriend}
+          addFriend={addFriend}
+          onAddNewFriend={handleSubmitNewFriend}
+          nameFriend={nameFriend}
+          onChangeName={handleChangeName}
+          imgFriend={imgFriend}
+          onChangeImg={handleChangeImg}
+          onClickAddFriend={handleClickAddFriend}
+        />
 
         {selectedFriend && (
           <form className="form-split-bill" onSubmit={handleSubmitShareBill}>
