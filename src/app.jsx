@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Logo } from "./components/logo"
 import { FriendsList } from "./components/friends-list"
+import { FormSplitAccount } from "./components/FormSplitAccount"
 
 const initialFriends = [
   {
@@ -108,38 +109,16 @@ const App = () => {
           onClickAddFriend={handleClickAddFriend}
         />
 
-        {selectedFriend && (
-          <form className="form-split-bill" onSubmit={handleSubmitShareBill}>
-            <h2>Rache a conta com {selectedFriend.name}</h2>
-            <label>
-              💰 Valor total
-              <input
-                value={totalBill}
-                onChange={handleChangeBill}
-                type="number"
-              />
-            </label>
-            <label>
-              📊 Seus gastos
-              <input
-                value={mySpend}
-                onChange={handleChangeMySpend}
-                type="number"
-              />
-            </label>
-            <label>
-              🤑 Quem vai pagar
-              <select value={whoWillPay} onChange={handleChangeWhoWillPay}>
-                <option value="you">Você</option>
-                <option value={selectedFriend.name}>
-                  {selectedFriend.name}
-                </option>
-              </select>
-            </label>
-
-            <button className="button">Rachar conta</button>
-          </form>
-        )}
+        <FormSplitAccount
+          selectedFriend={selectedFriend}
+          onSubmitShareBill={handleSubmitShareBill}
+          totalBill={totalBill}
+          onChangeBill={handleChangeBill}
+          mySpend={mySpend}
+          onChangeMySpend={handleChangeMySpend}
+          whoWillPay={whoWillPay}
+          onChangeWhoWillPay={handleChangeWhoWillPay}
+        />
       </div>
     </main>
   )
