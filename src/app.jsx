@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Logo } from "./components/logo"
 import { FriendsList } from "./components/friends-list"
-import { FormSplitAccount } from "./components/FormSplitAccount"
+import { FormSplitAccount } from "./components/form-split-account"
 
 const initialFriends = [
   {

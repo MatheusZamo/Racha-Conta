@@ -1,31 +1,11 @@
+import { FormAddNewFriend } from "./form-add-new-friend"
+
 const getMsgInfo = (balance) =>
   balance < 0
     ? { message: `Você deve ${Math.abs(balance)} reais`, color: "red-debit" }
     : balance > 0
     ? { message: `Te deve ${balance} reais`, color: "green-credit" }
     : { message: "Estão quites", color: "white-neutral" }
-
-// const FormAddNewFriend = ({
-//   addFriend,
-//   onAddNewFriend,
-//   nameFriend,
-//   onChangeName,
-//   imgFriend,
-//   onChangeImg,
-// }) =>
-//   addFriend && (
-//     <form className="form-add-friend" onSubmit={onAddNewFriend}>
-//       <label>
-//         🧍‍♂️ Nome
-//         <input type="text" value={nameFriend} onChange={onChangeName} />
-//       </label>
-//       <label>
-//         📸 Foto
-//         <input type="text" value={imgFriend} onChange={onChangeImg} />
-//       </label>
-//       <button className="button">Adicionar</button>
-//     </form>
-//   )
 
 const FriendsList = ({
   friends,
@@ -61,28 +41,14 @@ const FriendsList = ({
       })}
     </ul>
 
-    {/* <FormAddNewFriend
+    <FormAddNewFriend
       addFriend={addFriend}
       onAddNewFriend={onAddNewFriend}
       nameFriend={nameFriend}
-      onCHangeName={onChangeName}
+      onChangeName={onChangeName}
       imgFriend={imgFriend}
       onChangeImg={onChangeImg}
-    /> */}
-
-    {addFriend && (
-      <form className="form-add-friend" onSubmit={onAddNewFriend}>
-        <label>
-          🧍‍♂️ Nome
-          <input type="text" value={nameFriend} onChange={onChangeName} />
-        </label>
-        <label>
-          📸 Foto
-          <input type="text" value={imgFriend} onChange={onChangeImg} />
-        </label>
-        <button className="button">Adicionar</button>
-      </form>
-    )}
+    />
 
     <button
       className={`button ${addFriend ? "button-close" : ""}`}
