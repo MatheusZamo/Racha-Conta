@@ -27,7 +27,7 @@ const useItems = () => {
   const [totalBill, setTotalBill] = useState("")
   const [mySpend, setMySpend] = useState("")
   const [whoWillPay, setWhoWillPay] = useState("you")
-  const [addFriend, setAddFriend] = useState(false)
+  const [showFormAddFriend, setShowFormAddFriend] = useState(false)
   const [nameFriend, setNameFriend] = useState("")
   const [imgFriend, setImgFriend] = useState("")
 
@@ -49,7 +49,7 @@ const useItems = () => {
               balance:
                 whoWillPay === "you"
                   ? friend.balance + (+totalBill - +mySpend)
-                  : friend.balance - mySpend,
+                  : friend.balance - +mySpend,
             }
           : friend,
       ),
@@ -62,7 +62,7 @@ const useItems = () => {
   }
 
   const handleClickAddFriend = () => {
-    setAddFriend(!addFriend)
+    setShowFormAddFriend(!showFormAddFriend)
   }
   const handleChangeName = (e) => setNameFriend(e.target.value)
   const handleChangeImg = (e) => setImgFriend(e.target.value)
@@ -85,16 +85,17 @@ const useItems = () => {
     setNameFriend("")
     setImgFriend("")
     nameFriend.length && imgFriend.length
-      ? setAddFriend(false)
-      : setAddFriend(true)
+      ? setShowFormAddFriend(false)
+      : setShowFormAddFriend(true)
   }
+
   return {
     friends,
     selectedFriend,
     totalBill,
     mySpend,
     whoWillPay,
-    addFriend,
+    showFormAddFriend,
     nameFriend,
     imgFriend,
     handleClickFriend,

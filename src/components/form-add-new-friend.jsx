@@ -1,13 +1,13 @@
 const FormAddNewFriend = ({
-  addFriend,
-  onAddNewFriend,
+  showFormAddFriend,
+  onSubmitNewFriend,
   nameFriend,
   onChangeName,
   imgFriend,
   onChangeImg,
 }) =>
-  addFriend && (
-    <form className="form-add-friend" onSubmit={onAddNewFriend}>
+  showFormAddFriend && (
+    <form className="form-add-friend" onSubmit={onSubmitNewFriend}>
       <label>
         🧍‍♂️ Nome
         <input type="text" value={nameFriend} onChange={onChangeName} />

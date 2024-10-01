@@ -1,5 +1,7 @@
 import { Logo } from "./components/logo"
 import { FriendsList } from "./components/friends-list"
+import { FormAddNewFriend } from "./components/form-add-new-friend"
+import { ButtonAddFriend } from "./components/button-add-friend"
 import { FormSplitAccount } from "./components/form-split-account"
 import { useItems } from "./hooks/use-items"
 
@@ -10,7 +12,7 @@ const App = () => {
     totalBill,
     mySpend,
     whoWillPay,
-    addFriend,
+    showFormAddFriend,
     nameFriend,
     imgFriend,
     handleClickFriend,
@@ -28,18 +30,27 @@ const App = () => {
     <main>
       <Logo />
       <div className="app">
-        <FriendsList
-          friends={friends}
-          selectedFriend={selectedFriend}
-          onClickFriend={handleClickFriend}
-          addFriend={addFriend}
-          onAddNewFriend={handleSubmitNewFriend}
-          nameFriend={nameFriend}
-          onChangeName={handleChangeName}
-          imgFriend={imgFriend}
-          onChangeImg={handleChangeImg}
-          onClickAddFriend={handleClickAddFriend}
-        />
+        <aside className="sidebar">
+          <FriendsList
+            friends={friends}
+            selectedFriend={selectedFriend}
+            onClickFriend={handleClickFriend}
+          />
+
+          <FormAddNewFriend
+            showFormAddFriend={showFormAddFriend}
+            onSubmitNewFriend={handleSubmitNewFriend}
+            nameFriend={nameFriend}
+            onChangeName={handleChangeName}
+            imgFriend={imgFriend}
+            onChangeImg={handleChangeImg}
+          />
+
+          <ButtonAddFriend
+            showFormAddFriend={showFormAddFriend}
+            onClickAddFriend={handleClickAddFriend}
+          />
+        </aside>
 
         <FormSplitAccount
           selectedFriend={selectedFriend}
