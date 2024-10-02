@@ -9,16 +9,10 @@ const App = () => {
   const {
     friends,
     selectedFriend,
-    totalBill,
-    mySpend,
-    whoWillPay,
     showFormAddFriend,
     nameFriend,
     imgFriend,
     handleClickFriend,
-    handleChangeBill,
-    handleChangeMySpend,
-    handleChangeWhoWillPay,
     handleSubmitShareBill,
     handleClickAddFriend,
     handleChangeName,
@@ -36,7 +30,6 @@ const App = () => {
             selectedFriend={selectedFriend}
             onClickFriend={handleClickFriend}
           />
-
           <FormAddNewFriend
             showFormAddFriend={showFormAddFriend}
             onSubmitNewFriend={handleSubmitNewFriend}
@@ -51,16 +44,9 @@ const App = () => {
             onClickAddFriend={handleClickAddFriend}
           />
         </aside>
-
         <FormSplitAccount
           selectedFriend={selectedFriend}
           onSubmitShareBill={handleSubmitShareBill}
-          totalBill={totalBill}
-          onChangeBill={handleChangeBill}
-          mySpend={mySpend}
-          onChangeMySpend={handleChangeMySpend}
-          whoWillPay={whoWillPay}
-          onChangeWhoWillPay={handleChangeWhoWillPay}
         />
       </div>
     </main>

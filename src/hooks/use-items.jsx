@@ -24,42 +24,12 @@ const initialFriends = [
 const useItems = () => {
   const [friends, setFriends] = useState(initialFriends)
   const [selectedFriend, setSelectedFriend] = useState(null)
-  const [totalBill, setTotalBill] = useState("")
-  const [mySpend, setMySpend] = useState("")
-  const [whoWillPay, setWhoWillPay] = useState("you")
   const [showFormAddFriend, setShowFormAddFriend] = useState(false)
   const [nameFriend, setNameFriend] = useState("")
   const [imgFriend, setImgFriend] = useState("")
 
   const handleClickFriend = (friend) =>
     setSelectedFriend((preview) => (preview?.id === friend.id ? null : friend))
-
-  const handleChangeBill = (e) => setTotalBill(e.target.value)
-  const handleChangeMySpend = (e) => setMySpend(e.target.value)
-  const handleChangeWhoWillPay = (e) => setWhoWillPay(e.target.value)
-
-  const handleSubmitShareBill = (e) => {
-    e.preventDefault()
-
-    setFriends((prev) =>
-      prev.map((friend) =>
-        selectedFriend.id === friend.id
-          ? {
-              ...friend,
-              balance:
-                whoWillPay === "you"
-                  ? friend.balance + (+totalBill - +mySpend)
-                  : friend.balance - +mySpend,
-            }
-          : friend,
-      ),
-    )
-
-    setSelectedFriend(null)
-    setTotalBill("")
-    setMySpend("")
-    setWhoWillPay("you")
-  }
 
   const handleClickAddFriend = () => {
     setShowFormAddFriend(!showFormAddFriend)
@@ -89,20 +59,19 @@ const useItems = () => {
       : setShowFormAddFriend(true)
   }
 
+  const handleSubmitShareBill = (friend) => {
+    setFriends((prev) => prev.map((p) => (friend.id === p.id ? friend : p)))
+    setSelectedFriend(null)
+  }
+
   return {
     friends,
     selectedFriend,
-    totalBill,
-    mySpend,
-    whoWillPay,
     showFormAddFriend,
     nameFriend,
     imgFriend,
-    handleClickFriend,
-    handleChangeBill,
-    handleChangeMySpend,
-    handleChangeWhoWillPay,
     handleSubmitShareBill,
+    handleClickFriend,
     handleClickAddFriend,
     handleChangeName,
     handleChangeImg,
