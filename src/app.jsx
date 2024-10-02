@@ -10,13 +10,9 @@ const App = () => {
     friends,
     selectedFriend,
     showFormAddFriend,
-    nameFriend,
-    imgFriend,
     handleClickFriend,
     handleSubmitShareBill,
     handleClickAddFriend,
-    handleChangeName,
-    handleChangeImg,
     handleSubmitNewFriend,
   } = useItems()
 
@@ -33,10 +29,6 @@ const App = () => {
           <FormAddNewFriend
             showFormAddFriend={showFormAddFriend}
             onSubmitNewFriend={handleSubmitNewFriend}
-            nameFriend={nameFriend}
-            onChangeName={handleChangeName}
-            imgFriend={imgFriend}
-            onChangeImg={handleChangeImg}
           />
 
           <ButtonAddFriend
