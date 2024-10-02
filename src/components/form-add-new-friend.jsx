@@ -1,23 +1,42 @@
-const FormAddNewFriend = ({
-  showFormAddFriend,
-  onSubmitNewFriend,
-  nameFriend,
-  onChangeName,
-  imgFriend,
-  onChangeImg,
-}) =>
-  showFormAddFriend && (
-    <form className="form-add-friend" onSubmit={onSubmitNewFriend}>
-      <label>
-        🧍‍♂️ Nome
-        <input type="text" value={nameFriend} onChange={onChangeName} />
-      </label>
-      <label>
-        📸 Foto
-        <input type="text" value={imgFriend} onChange={onChangeImg} />
-      </label>
-      <button className="button">Adicionar</button>
-    </form>
+import { useState } from "react"
+
+const FormAddNewFriend = ({ showFormAddFriend, onSubmitNewFriend }) => {
+  const [nameFriend, setNameFriend] = useState("")
+  const [imgFriend, setImgFriend] = useState("")
+
+  const handleChangeName = (e) => setNameFriend(e.target.value)
+  const handleChangeImg = (e) => setImgFriend(e.target.value)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    const newFriend = {
+      id: crypto.randomUUID(),
+      img: imgFriend,
+      name: nameFriend,
+      balance: 0,
+    }
+
+    onSubmitNewFriend(newFriend)
+    setNameFriend("")
+    setImgFriend("")
+  }
+
+  return (
+    showFormAddFriend && (
+      <form className="form-add-friend" onSubmit={handleSubmit}>
+        <label>
+          🧍‍♂️ Nome
+          <input type="text" value={nameFriend} onChange={handleChangeName} />
+        </label>
+        <label>
+          📸 Foto
+          <input type="text" value={imgFriend} onChange={handleChangeImg} />
+        </label>
+        <button className="button">Adicionar</button>
+      </form>
+    )
   )
+}
 
 export { FormAddNewFriend }

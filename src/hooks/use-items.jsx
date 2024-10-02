@@ -25,8 +25,6 @@ const useItems = () => {
   const [friends, setFriends] = useState(initialFriends)
   const [selectedFriend, setSelectedFriend] = useState(null)
   const [showFormAddFriend, setShowFormAddFriend] = useState(false)
-  const [nameFriend, setNameFriend] = useState("")
-  const [imgFriend, setImgFriend] = useState("")
 
   const handleClickFriend = (friend) =>
     setSelectedFriend((preview) => (preview?.id === friend.id ? null : friend))
@@ -34,47 +32,24 @@ const useItems = () => {
   const handleClickAddFriend = () => {
     setShowFormAddFriend(!showFormAddFriend)
   }
-  const handleChangeName = (e) => setNameFriend(e.target.value)
-  const handleChangeImg = (e) => setImgFriend(e.target.value)
-
-  const handleSubmitNewFriend = (e) => {
-    e.preventDefault()
-
-    nameFriend.length && imgFriend.length
-      ? setFriends((preview) => [
-          ...preview,
-          {
-            id: crypto.randomUUID(),
-            img: imgFriend,
-            name: nameFriend,
-            balance: 0,
-          },
-        ])
-      : friends
-
-    setNameFriend("")
-    setImgFriend("")
-    nameFriend.length && imgFriend.length
-      ? setShowFormAddFriend(false)
-      : setShowFormAddFriend(true)
-  }
 
   const handleSubmitShareBill = (friend) => {
     setFriends((prev) => prev.map((p) => (friend.id === p.id ? friend : p)))
     setSelectedFriend(null)
   }
 
+  const handleSubmitNewFriend = (newFriend) => {
+    setFriends((preview) => [...preview, newFriend])
+    setShowFormAddFriend(false)
+  }
+
   return {
     friends,
     selectedFriend,
     showFormAddFriend,
-    nameFriend,
-    imgFriend,
     handleSubmitShareBill,
     handleClickFriend,
     handleClickAddFriend,
-    handleChangeName,
-    handleChangeImg,
     handleSubmitNewFriend,
   }
 }
