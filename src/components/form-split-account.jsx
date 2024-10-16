@@ -1,9 +1,15 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 const FormSplitAccount = ({ selectedFriend, onSubmitShareBill }) => {
   const [totalBill, setTotalBill] = useState("")
   const [mySpend, setMySpend] = useState("")
   const [whoWillPay, setWhoWillPay] = useState("you")
+
+  useEffect(() => {
+    selectedFriend
+      ? (document.title = `${selectedFriend.name} foi selecionado(a)`)
+      : (document.title = "Racha conta")
+  }, [selectedFriend])
 
   const handleChangeBill = (e) => setTotalBill(e.target.value)
   const handleChangeMySpend = (e) => setMySpend(e.target.value)
