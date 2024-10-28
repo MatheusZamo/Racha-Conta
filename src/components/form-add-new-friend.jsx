@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const FormAddNewFriend = ({ showFormAddFriend, onSubmitNewFriend }) => {
+const FormAddNewFriend = ({ onSubmitNewFriend }) => {
   const [nameFriend, setNameFriend] = useState("")
   const [imgFriend, setImgFriend] = useState("")
 
@@ -23,19 +23,17 @@ const FormAddNewFriend = ({ showFormAddFriend, onSubmitNewFriend }) => {
   }
 
   return (
-    showFormAddFriend && (
-      <form className="form-add-friend" onSubmit={handleSubmit}>
-        <label>
-          🧍‍♂️ Nome
-          <input type="text" value={nameFriend} onChange={handleChangeName} />
-        </label>
-        <label>
-          📸 Foto
-          <input type="text" value={imgFriend} onChange={handleChangeImg} />
-        </label>
-        <button className="button">Adicionar</button>
-      </form>
-    )
+    <form className="form-add-friend" onSubmit={handleSubmit}>
+      <label>
+        🧍‍♂️ Nome
+        <input type="text" value={nameFriend} onChange={handleChangeName} />
+      </label>
+      <label>
+        📸 Foto
+        <input type="text" value={imgFriend} onChange={handleChangeImg} />
+      </label>
+      <button className="button">Adicionar</button>
+    </form>
   )
 }
 

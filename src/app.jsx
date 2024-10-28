@@ -26,20 +26,21 @@ const App = () => {
             selectedFriend={selectedFriend}
             onClickFriend={handleClickFriend}
           />
-          <FormAddNewFriend
-            showFormAddFriend={showFormAddFriend}
-            onSubmitNewFriend={handleSubmitNewFriend}
-          />
+          {showFormAddFriend && (
+            <FormAddNewFriend onSubmitNewFriend={handleSubmitNewFriend} />
+          )}
 
           <ButtonAddFriend
             showFormAddFriend={showFormAddFriend}
             onClickAddFriend={handleClickAddFriend}
           />
         </aside>
-        <FormSplitAccount
-          selectedFriend={selectedFriend}
-          onSubmitShareBill={handleSubmitShareBill}
-        />
+        {selectedFriend && (
+          <FormSplitAccount
+            selectedFriend={selectedFriend}
+            onSubmitShareBill={handleSubmitShareBill}
+          />
+        )}
       </div>
     </main>
   )

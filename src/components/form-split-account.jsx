@@ -6,10 +6,9 @@ const FormSplitAccount = ({ selectedFriend, onSubmitShareBill }) => {
   const [whoWillPay, setWhoWillPay] = useState("you")
 
   useEffect(() => {
-    selectedFriend
-      ? (document.title = `${selectedFriend.name} foi selecionado(a)`)
-      : (document.title = "Racha conta")
-  }, [selectedFriend])
+    document.title = `${selectedFriend.name} foi selecionado(a)`
+    return () => (document.title = "Racha conta")
+  }, [selectedFriend.name])
 
   const handleChangeBill = (e) => setTotalBill(e.target.value)
   const handleChangeMySpend = (e) => setMySpend(e.target.value)
@@ -32,28 +31,26 @@ const FormSplitAccount = ({ selectedFriend, onSubmitShareBill }) => {
   }
 
   return (
-    selectedFriend && (
-      <form className="form-split-bill" onSubmit={handleSubmitShareBill}>
-        <h2>Rache a conta com {selectedFriend.name}</h2>
-        <label>
-          💰 Valor total
-          <input value={totalBill} onChange={handleChangeBill} type="number" />
-        </label>
-        <label>
-          📊 Seus gastos
-          <input value={mySpend} onChange={handleChangeMySpend} type="number" />
-        </label>
-        <label>
-          🤑 Quem vai pagar
-          <select value={whoWillPay} onChange={handleChangeWhoWillPay}>
-            <option value="you">Você</option>
-            <option value={selectedFriend.name}>{selectedFriend.name}</option>
-          </select>
-        </label>
+    <form className="form-split-bill" onSubmit={handleSubmitShareBill}>
+      <h2>Rache a conta com {selectedFriend.name}</h2>
+      <label>
+        💰 Valor total
+        <input value={totalBill} onChange={handleChangeBill} type="number" />
+      </label>
+      <label>
+        📊 Seus gastos
+        <input value={mySpend} onChange={handleChangeMySpend} type="number" />
+      </label>
+      <label>
+        🤑 Quem vai pagar
+        <select value={whoWillPay} onChange={handleChangeWhoWillPay}>
+          <option value="you">Você</option>
+          <option value={selectedFriend.name}>{selectedFriend.name}</option>
+        </select>
+      </label>
 
-        <button className="button">Rachar conta</button>
-      </form>
-    )
+      <button className="button">Rachar conta</button>
+    </form>
   )
 }
 
