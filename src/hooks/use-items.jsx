@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useReducer } from "react"
 
 const initialFriends = [
   {
@@ -21,32 +21,44 @@ const initialFriends = [
   },
 ]
 
+const initialState = {friends: initialFriends, selectedFriend: null, showFormAddFriend: false}
+
+const reducer = (state, action) => ({
+  submitted_share_bill: { 
+    ...state, 
+    selectedFriend : null, 
+    friends: state.friends.map(preview => action.friend?.id === preview.id ? action.friend : preview)
+  },
+  selected_friend: {
+    ...state,
+    selectedFriend: state.selectedFriend?.id === action.friend?.id ? null : action.friend
+  },
+  submitted_new_friend: {
+    ...state,
+    showFormAddFriend: false,
+    friends: [...state.friends, action.newFriend]
+  },
+  clicked_to_add_new_friend: {
+    ...state,
+    showFormAddFriend: !state.showFormAddFriend
+  }
+})[action.type] || state
+
 const useItems = () => {
-  const [friends, setFriends] = useState(initialFriends)
-  const [selectedFriend, setSelectedFriend] = useState(null)
-  const [showFormAddFriend, setShowFormAddFriend] = useState(false)
+const [state, dispatch] = useReducer(reducer, initialState)
 
-  const handleClickFriend = (friend) =>
-    setSelectedFriend((preview) => (preview?.id === friend.id ? null : friend))
+  const handleClickFriend = (friend) => dispatch({ type: 'selected_friend', friend })
 
-  const handleClickAddFriend = () => {
-    setShowFormAddFriend(!showFormAddFriend)
-  }
+  const handleClickAddFriend = () => dispatch({ type: 'clicked_to_add_new_friend'})
 
-  const handleSubmitShareBill = (friend) => {
-    setFriends((prev) => prev.map((p) => (friend.id === p.id ? friend : p)))
-    setSelectedFriend(null)
-  }
+  const handleSubmitShareBill = (friend) => dispatch({ type: 'submitted_share_bill',friend })
 
-  const handleSubmitNewFriend = (newFriend) => {
-    setFriends((preview) => [...preview, newFriend])
-    setShowFormAddFriend(false)
-  }
+  const handleSubmitNewFriend = (newFriend) => dispatch({ type: 'submitted_new_friend', newFriend })
 
   return {
-    friends,
-    selectedFriend,
-    showFormAddFriend,
+    friends: state.friends,
+    selectedFriend: state.selectedFriend,
+    showFormAddFriend: state.showFormAddFriend,
     handleSubmitShareBill,
     handleClickFriend,
     handleClickAddFriend,
